@@ -81,6 +81,20 @@ describe("search", () => {
 });
 
 describe("pages", () => {
+	it("redirects the trailing slash on about to its canonical path", async () => {
+		const about = await app.request("/about/");
+		expect(about.status).toBe(301);
+		expect(about.headers.get("location")).toBe("https://tool.test/about");
+
+		const aboutWithQuery = await app.request("/about/?x=1");
+		expect(aboutWithQuery.status).toBe(301);
+		expect(aboutWithQuery.headers.get("location")).toBe(
+			"https://tool.test/about?x=1",
+		);
+
+		expect((await app.request("/")).status).toBe(200);
+	});
+
 	it("serves the home page with a policy that allows only this site's scripts", async () => {
 		const res = await app.request("/");
 		expect(res.status).toBe(200);

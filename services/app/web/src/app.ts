@@ -123,6 +123,22 @@ export function createApp(options: AppOptions = {}) {
 		await next();
 	});
 
+	/**
+	 * A page path with a trailing slash (/about/) is the same page as its no-slash form (/about): redirect (301) to the
+	 * canonical address so copied links, crawlers and search results all agree on one URL. The root "/" is left alone, and
+	 * the query string is kept on the redirect. Only GET and HEAD are redirected; other methods fall through unchanged.
+	 */
+	app.use("*", async (c, next) => {
+		if (c.req.method !== "GET" && c.req.method !== "HEAD") return next();
+		const url = new URL(c.req.url);
+		const path = url.pathname;
+		if (path.length > 1 && path.endsWith("/")) {
+			const canonical = path.replace(/\/$/, "");
+			return c.redirect(`${baseOf(c)}${canonical}${url.search}`, 301);
+		}
+		return next();
+	});
+
 	app.use("*", async (c, next) => {
 		await next();
 		for (const [k, v] of Object.entries(securityHeaders()))
