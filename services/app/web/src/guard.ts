@@ -124,8 +124,9 @@ export function securityHeaders(): Record<string, string> {
 			"frame-ancestors 'none'",
 		].join("; "),
 		"x-content-type-options": "nosniff",
+		"x-frame-options": "SAMEORIGIN",
 		"referrer-policy": "strict-origin-when-cross-origin",
 		"permissions-policy": "camera=(), microphone=(), geolocation=()",
-		"strict-transport-security": "max-age=15552000; includeSubDomains",
+		"strict-transport-security": "max-age=31536000; includeSubDomains",
 	};
 }
