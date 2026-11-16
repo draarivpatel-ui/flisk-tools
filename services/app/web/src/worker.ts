@@ -3,6 +3,7 @@
 import { createApp } from "./app";
 import { withEdgeCache } from "./edge-cache";
 import { parseProxyMode } from "./guard";
+import { withSecurityHeaders } from "./security-headers";
 
 interface Env {
 	PUBLIC_URL?: string;
@@ -32,6 +33,6 @@ export default {
 			(r) => a.fetch(r, env, ctx as never),
 			cache,
 			(p) => ctx.waitUntil(p),
-		);
+		).then(withSecurityHeaders);
 	},
 };

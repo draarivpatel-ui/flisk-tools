@@ -447,7 +447,7 @@ describe("security headers", () => {
 		const res = await app.request("/");
 		expect(res.status).toBe(200);
 		expect(res.headers.get("strict-transport-security")).toBe(
-			"max-age=15552000; includeSubDomains",
+			"max-age=31536000; includeSubDomains",
 		);
 	});
 
@@ -457,7 +457,7 @@ describe("security headers", () => {
 		});
 		expect(res.status).toBe(301);
 		expect(res.headers.get("strict-transport-security")).toBe(
-			"max-age=15552000; includeSubDomains",
+			"max-age=31536000; includeSubDomains",
 		);
 	});
 });
