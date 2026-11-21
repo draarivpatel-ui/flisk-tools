@@ -233,7 +233,7 @@ export function mcpServerCard(base: string): string {
 		name: "si.flisk/tools",
 		title: SITE.name,
 		description:
-			"Search the Flisk Tools catalog of developer tools, AI agent skills and apps, and read one listing with its description, address, author and stars.",
+			"Search the Flisk Tools catalog of tools, agent skills and apps, and read one listing.",
 		version: "1.0.0",
 		websiteUrl: `${base}/`,
 		remotes: [{ type: "streamable-http", url: `${base}/mcp` }],

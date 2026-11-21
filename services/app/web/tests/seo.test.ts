@@ -183,6 +183,8 @@ describe("files for crawlers", () => {
 			const card = JSON.parse(text) as {
 				$schema: string;
 				name: string;
+				title: string;
+				description: string;
 				websiteUrl: string;
 				remotes: { type: string; url: string }[];
 			};
@@ -190,6 +192,10 @@ describe("files for crawlers", () => {
 				"https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
 			);
 			expect(card.name).toBe("si.flisk/tools");
+			// the Server Card schema: description 1-100 characters, title at most 100
+			expect(card.description.length).toBeGreaterThanOrEqual(1);
+			expect(card.description.length).toBeLessThanOrEqual(100);
+			expect(card.title.length).toBeLessThanOrEqual(100);
 			expect(card.websiteUrl).toBe("https://tool.test/");
 			expect(card.remotes[0]).toEqual({
 				type: "streamable-http",
