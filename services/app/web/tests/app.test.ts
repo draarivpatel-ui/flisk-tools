@@ -461,3 +461,19 @@ describe("security headers", () => {
 		);
 	});
 });
+
+describe("skills page search", () => {
+	it("filters skills by the typed words and keeps them in the links", async () => {
+		const html = await (
+			await app.request("/skills?q=review&sort=stars")
+		).text();
+		expect(html).toContain('name="q" value="review"');
+		expect(html).toContain("Find skill");
+		expect(html).toContain("q=review");
+	});
+	it("says so, and offers the store search, when nothing matches", async () => {
+		const html = await (await app.request("/skills?q=zzzqqqxxx")).text();
+		expect(html).toContain("No skills match");
+		expect(html).toContain("search the whole store");
+	});
+});

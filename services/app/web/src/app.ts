@@ -197,6 +197,8 @@ export function createApp(options: AppOptions = {}) {
 				baseOf(c),
 				c.req.query("cat"),
 				Number(c.req.query("page")) || 1,
+				c.req.query("q"),
+				c.req.query("sort"),
 			),
 		),
 	);
