@@ -114,7 +114,7 @@ describe("pages", () => {
 		);
 		const html = await res.text();
 		expect(html).toContain(
-			'<script defer data-domain="tools.flisk.si" src="https://flisk.sh/a.js"></script><script src="https://flisk.si/assets/bar.js" defer></script>',
+			'<script defer data-domain="tools.flisk.si" src="https://flisk.sh/a.js"></script><script src="https://flisk.si/assets/bar.js" data-product="Tools" data-icon="flisk-tools" data-accent="#22c55e" data-siblings="Cilytics,Ranker" data-text="Run small web and GitHub tools on your own GitHub, free." defer></script>',
 		);
 		expect(html).toContain("README Score");
 		expect(html).toContain('<script src="/signin.js" defer>');
