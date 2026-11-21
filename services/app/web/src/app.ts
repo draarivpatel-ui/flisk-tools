@@ -24,6 +24,7 @@ import { cleanName, meString, parseMe, portfolioMarkdown } from "./portfolio";
 import {
 	ICONS,
 	llmsTxt,
+	mcpServerCard,
 	robotsTxt,
 	securityTxt,
 	sitemapXml,
@@ -303,6 +304,18 @@ export function createApp(options: AppOptions = {}) {
 		}),
 	);
 	app.get("/.well-known/security.txt", (c) => c.text(securityTxt(baseOf(c))));
+	// The MCP Server Card: one body at both well-known paths. GET and HEAD, readable from any origin.
+	for (const path of [
+		"/.well-known/mcp-server-card.json",
+		"/.well-known/mcp/server-card.json",
+	])
+		app.on(["GET", "HEAD"], path, (c) =>
+			c.body(mcpServerCard(baseOf(c)), 200, {
+				"content-type": "application/json; charset=utf-8",
+				"access-control-allow-origin": "*",
+				"cache-control": "public, max-age=3600",
+			}),
+		);
 	for (const [name, file] of files)
 		app.get(`/${name}`, (c) =>
 			c.body(file.body as Uint8Array<ArrayBuffer>, 200, {
