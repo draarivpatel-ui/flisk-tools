@@ -132,6 +132,12 @@ async function handleOne(message: JsonRpcRequest): Promise<unknown> {
 		};
 	const { id, method, params = {} } = message;
 	if (id === undefined || id === null) return undefined;
+	if (params === null || typeof params !== "object" || Array.isArray(params))
+		return {
+			jsonrpc: "2.0",
+			id,
+			error: { code: -32602, message: "Invalid params" },
+		};
 	const ok = (result: unknown) => ({ jsonrpc: "2.0", id, result });
 	switch (method) {
 		case "initialize": {
